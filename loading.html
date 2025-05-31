@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Loading...</title>
+<style>
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  body {
+    /* Background image - replace URL below */
+    background: url('https://i.imgur.com/yourImage.png') no-repeat center center fixed;
+    background-size: cover;
+    background-color: #111;
+  }
+
+  /* Overlay for darkening background */
+  #overlay {
+    position: fixed;
+    top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
+  }
+
+  /* Center container for loading bar */
+  #loading-container {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    max-width: 600px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  /* The loading bar itself */
+  #loading-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #00aaff, #0044ff);
+    border-radius: 12px 0 0 12px;
+    transition: width 0.3s ease;
+  }
+
+  /* Optional loading text below bar */
+  #loading-text {
+    position: fixed;
+    top: calc(50% + 30px);
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-weight: 600;
+    font-size: 18px;
+    text-shadow: 0 0 5px #000;
+    z-index: 2;
+  }
+</style>
+</head>
+<body>
+  <div id="overlay"></div>
+
+  <div id="loading-container">
+    <div id="loading-bar"></div>
+  </div>
+  <div id="loading-text">Loading... 0%</div>
+
+  <!-- Optional background music -->
+  <audio id="bg-music" autoplay loop>
+    <source src="https://yourdomain.com/yourmusic.mp3" type="audio/mpeg">
+    <!-- Fallback message -->
+    Your browser does not support the audio element.
+  </audio>
+
+<script>
+  // Simulate loading progress (replace with actual game loading info if possible)
+  let progress = 0;
+  const bar = document.getElementById('loading-bar');
+  const text = document.getElementById('loading-text');
+
+  function updateProgress() {
+    if (progress < 100) {
+      progress += Math.random() * 5; // increment by random step
+      if (progress > 100) progress = 100;
+      bar.style.width = progress + '%';
+      text.textContent = 'Loading... ' + Math.floor(progress) + '%';
+      setTimeout(updateProgress, 200);
+    } else {
+      text.textContent = 'Loading complete!';
+    }
+  }
+  updateProgress();
+
+  // Mute music if browser blocks autoplay without user interaction
+  const music = document.getElementById('bg-music');
+  music.volume = 0.2;
+
+  // If you want to require user interaction to start audio, add a click handler:
+  document.body.addEventListener('click', () => {
+    if (music.paused) music.play();
+  });
+</script>
+</body>
+</html>
